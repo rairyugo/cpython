@@ -7,6 +7,7 @@
 #include "internal/pystate.h"
 
 #include <locale.h>
+#include <gc.h>
 
 #if defined(MS_WINDOWS) || defined(__CYGWIN__)
 #  include <windows.h>
@@ -3020,6 +3021,9 @@ pymain_init(_PyMain *pymain)
 static int
 pymain_main(_PyMain *pymain)
 {
+    // Boehm GC init.
+    GC_INIT();
+
     int res = pymain_init(pymain);
     if (res == 1) {
         goto done;
